@@ -32,14 +32,20 @@ public class App {
         }
         App app = new App();
         app.loadDictionary();
-        List<String> word = app.getWord(args[0]);
-        String[] array = word.toArray(new String[word.size()]);
-        CMU2KatakanaLexer lexer = new CMU2KatakanaLexer(
-                new ANTLRInputStream(Stream.of(array).collect(Collectors.joining(" "))));
-        CommonTokenStream token = new CommonTokenStream(lexer);
-        CMU2KatakanaParser parser = new CMU2KatakanaParser(token);
-        ConvertKatakanaContext context = parser.convertKatakana();
-        System.out.println(context.result);
+
+        String string = Stream.of(args[0].split("[ ]+"))
+                .map(w -> {
+                    List<String> word = app.getWord(w);
+                    String[] array = word.toArray(new String[word.size()]);
+                    CMU2KatakanaLexer lexer = new CMU2KatakanaLexer(
+                            new ANTLRInputStream(Stream.of(array).collect(Collectors.joining(" "))));
+                    CommonTokenStream token = new CommonTokenStream(lexer);
+                    CMU2KatakanaParser parser = new CMU2KatakanaParser(token);
+                    ConvertKatakanaContext context = parser.convertKatakana();
+                    return context.result;
+                })
+                .collect(Collectors.joining(" "));
+        System.out.println(string);
         app.close();
     }
 
