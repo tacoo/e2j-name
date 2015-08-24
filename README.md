@@ -1,5 +1,5 @@
 # e2j-name
-Convert English to Katakana
+Convert English to Katakana. This application used CMU speech library to convert English to Phonetic alphabet also used Antlr to translate Phonetic alphabet to Katakana. The quality is really low and currently it does not support 'ッ'.
 
 ## Requirements
 + Java 1.8
