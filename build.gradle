@@ -59,7 +59,7 @@ task generateGrammarSource(dependsOn: antlrOutputDir, type: JavaExec) {
   description = 'Generates Java sources from ANTLR4 grammars.'
 
   inputs.dir file(antlr.antlrSource)
-  outputs.dir file(antlr.destinationDir)
+  //outputs.dir file(antlr.destinationDir)
 
   def grammars = fileTree(antlr.antlrSource).include('**/*.g4')
 
@@ -73,6 +73,10 @@ task generateGrammarSource(dependsOn: antlrOutputDir, type: JavaExec) {
 compileJava {
   dependsOn generateGrammarSource
   source antlr.destinationDir
+}
+
+clean {
+  delete antlr.destinationDir
 }
 
 task fatCapsule(type: FatCapsule) {
