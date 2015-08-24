@@ -10,4 +10,5 @@ Convert English to Katakana
 
 ## Run
 ``java -jar build/libs/e2j-name-1.0-capsule.jar james``
+
 ``ジェイムズ``
