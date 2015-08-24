@@ -51,12 +51,14 @@ public class App {
 
     private List<String> getWord(String text) {
         Word word = this.dictionary.getWord(text);
-        if (word == null || word.getPronunciations() == null
+        if (word == null
+                || word.getPronunciations() == null
                 || word.getPronunciations().length == 0) {
             return null;
         }
         Unit[] units = word.getPronunciations()[0].getUnits();
-        return Stream.of(units).map(u -> u.toString())
+        return Stream.of(units)
+                .map(u -> u.toString())
                 .collect(Collectors.toList());
     }
 
@@ -66,10 +68,14 @@ public class App {
     private void loadDictionary() {
         try {
             TextDictionary dictionary = new TextDictionary(
-                    App.class.getResource("/cmudict-en-us.dict"),
-                    App.class.getResource("/empty.txt"), null, false, null,
-                    new UnitManager(), App.class.getResource("/model.fst.ser"),
-                    2);
+                    App.class.getResource("/cmudict-en-us.dict")
+                    , App.class.getResource("/empty.txt")
+                    , null
+                    , false
+                    , null
+                    , new UnitManager()
+                    , App.class.getResource("/model.fst.ser")
+                    , 2);
             dictionary.allocate();
             this.dictionary = dictionary;
             this.cmu2Ipa = getCmu2IpaMap();
