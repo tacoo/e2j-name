@@ -1,14 +1,12 @@
+plugins {
+  id "us.kirchmeier.capsule" version "1.0-rc1"
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
 sourceCompatibility = 1.8
 version = '1.0'
-jar {
-    manifest {
-        attributes 'Implementation-Title': 'Gradle Quickstart',
-                   'Implementation-Version': version
-    }
-}
 
 repositories {
     mavenCentral()
@@ -17,7 +15,63 @@ repositories {
     }
 }
 
+configurations {
+  antlr4 {
+    description = "ANTLR4"
+  }
+}
+
 dependencies {
     compile 'edu.cmu.sphinx:sphinx4-core:1.0-SNAPSHOT'
+    compile 'org.antlr:antlr4-runtime:4.5.1-1'
+    antlr4 'org.antlr:antlr4:4.5.1-1'
     testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+sourceSets.main.java.srcDir {
+  main {
+    java {
+      srcDir 'src/main/java'
+      srcDir 'src/generated-sources/java'
+    }
+  }
+}
+
+ext.antlr = [
+  antlrSource: 'src/main/antlr'
+  , destinationDir: "src/generated-sources/java"
+  , grammarpackage: "tac.language.antlr",
+]
+
+task antlrOutputDir << {
+  mkdir(antlr.destinationDir)
+}
+
+task generateGrammarSource(dependsOn: antlrOutputDir, type: JavaExec) {
+  description = 'Generates Java sources from ANTLR4 grammars.'
+
+  inputs.dir file(antlr.antlrSource)
+  outputs.dir file(antlr.destinationDir)
+
+  def grammars = fileTree(antlr.antlrSource).include('**/*.g4')
+
+  main = 'org.antlr.v4.Tool'
+  classpath = configurations.antlr4
+  def pkg = antlr.grammarpackage.replaceAll("\\.", "/")
+  args = ["-o", "${antlr.destinationDir}/${pkg}"/*, "-atn"*/, "-visitor", "-package", antlr.grammarpackage, grammars.files].flatten()
+
+}
+
+compileJava {
+  dependsOn generateGrammarSource
+  source antlr.destinationDir
+}
+
+compileJava {
+  dependsOn generateGrammarSource
+  source antlr.destinationDir
+}
+
+task fatCapsule(type: FatCapsule) {
+  applicationClass 'tac.language.App'
 }

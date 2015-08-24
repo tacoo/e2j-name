@@ -1,11 +1,19 @@
 package tac.language;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.LogManager;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+
+import tac.language.antlr.CMU2KatakanaLexer;
+import tac.language.antlr.CMU2KatakanaParser;
+import tac.language.antlr.CMU2KatakanaParser.ConvertKatakanaContext;
 import edu.cmu.sphinx.linguist.acoustic.Unit;
 import edu.cmu.sphinx.linguist.acoustic.UnitManager;
 import edu.cmu.sphinx.linguist.dictionary.TextDictionary;
@@ -13,38 +21,36 @@ import edu.cmu.sphinx.linguist.dictionary.Word;
 
 public class App {
     public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("Please set a argument");
+            return;
+        }
+        try {
+            LogManager.getLogManager().readConfiguration(App.class.getResourceAsStream("/logging.properties"));
+        } catch (SecurityException | IOException e) {
+            e.printStackTrace();
+        }
         App app = new App();
         app.loadDictionary();
-        System.out.println(app.getWord("james"));
-        System.out.println(app.getWord("maven"));
-        System.out.println(app.getWord("zion"));
-        System.out.println(app.getWord("peter"));
-        System.out.println(app.getWord("ng"));
-        System.out.println(app.getWord("nothing"));
-        System.out.println(app.getWord("apple"));
-        System.out.println(app.getWord("pure"));
-        System.out.println(app.getWord("katy"));
-        System.out.println(app.toIPA(app.getWord("james")));
+        List<String> word = app.getWord(args[0]);
+        String[] array = word.toArray(new String[word.size()]);
+        CMU2KatakanaLexer lexer = new CMU2KatakanaLexer(
+                new ANTLRInputStream(Stream.of(array).collect(Collectors.joining(" "))));
+        CommonTokenStream token = new CommonTokenStream(lexer);
+        CMU2KatakanaParser parser = new CMU2KatakanaParser(token);
+        ConvertKatakanaContext context = parser.convertKatakana();
+        System.out.println(context.result);
         app.close();
     }
 
     private List<String> getWord(String text) {
         Word word = this.dictionary.getWord(text);
-        if (word == null
-                || word.getPronunciations() == null
+        if (word == null || word.getPronunciations() == null
                 || word.getPronunciations().length == 0) {
             return null;
         }
         Unit[] units = word.getPronunciations()[0].getUnits();
-        return Stream.of(units)
-                .map(u -> u.toString())
-                // .map(u -> cmu2Ipa.get(u.toString()))
-                .collect(Collectors.toList());
-    }
-
-    private List<String> toIPA(List<String> word) {
-        return word.stream()
-                .map(w -> cmu2Ipa.get(w))
+        return Stream.of(units).map(u -> u.toString())
                 .collect(Collectors.toList());
     }
 
@@ -55,12 +61,8 @@ public class App {
         try {
             TextDictionary dictionary = new TextDictionary(
                     App.class.getResource("/cmudict-en-us.dict"),
-                    App.class.getResource("/empty.txt"),
-                    null,
-                    false,
-                    null,
-                    new UnitManager(),
-                    App.class.getResource("/model.fst.ser"),
+                    App.class.getResource("/empty.txt"), null, false, null,
+                    new UnitManager(), App.class.getResource("/model.fst.ser"),
                     2);
             dictionary.allocate();
             this.dictionary = dictionary;
@@ -72,6 +74,12 @@ public class App {
 
     private void close() {
         this.dictionary.deallocate();
+    }
+
+    List<String> toIPA(List<String> word) {
+        return word.stream()
+                .map(w -> cmu2Ipa.get(w))
+                .collect(Collectors.toList());
     }
 
     private Map<String, String> getCmu2IpaMap() {
