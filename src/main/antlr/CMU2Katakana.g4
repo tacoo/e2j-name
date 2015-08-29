@@ -14,7 +14,55 @@ jwords returns[String katakana] : j+=jword+
   ;
 
 jword returns[String katakana] : 
-    B  AA { $katakana = "バ"; }
+    p=jword P  AA { $katakana = $p.katakana + "ッパ"; }
+  | p=jword P  AE { $katakana = $p.katakana + "ッペ"; }
+  | p=jword P  AH { $katakana = $p.katakana + "ッパー"; }
+  | p=jword P  AO { $katakana = $p.katakana + "ッパオ"; }
+  | p=jword P  AW { $katakana = $p.katakana + "ッパウ"; }
+  | p=jword P  AY { $katakana = $p.katakana + "ッパイ"; }
+  | p=jword P  IH { $katakana = $p.katakana + "ッピー"; }
+  | p=jword P  IY { $katakana = $p.katakana + "ッピ"; }
+  | p=jword P  UH { $katakana = $p.katakana + "ップ"; }
+  | p=jword P  UW { $katakana = $p.katakana + "ップ"; }
+  | p=jword P  EH { $katakana = $p.katakana + "ッペ"; }
+  | p=jword P  ER { $katakana = $p.katakana + "ッパー"; }
+  | p=jword P  EY { $katakana = $p.katakana + "ッペイ"; }
+  | p=jword P  OW { $katakana = $p.katakana + "ッポウ"; }
+  | p=jword P  OY { $katakana = $p.katakana + "ッポイ"; }
+  | p=jword P     { $katakana = $p.katakana + "ップ"; }
+  | p=jword T  AA { $katakana = $p.katakana + "ッタ"; }
+  | p=jword T  AE { $katakana = $p.katakana + "ッテ"; }
+  | p=jword T  AH { $katakana = $p.katakana + "ッター"; }
+  | p=jword T  AO { $katakana = $p.katakana + "ッタオ"; }
+  | p=jword T  AW { $katakana = $p.katakana + "ッタウ"; }
+  | p=jword T  AY { $katakana = $p.katakana + "ッタイ"; }
+  | p=jword T  IH { $katakana = $p.katakana + "ッティー"; }
+  | p=jword T  IY { $katakana = $p.katakana + "ッティ"; }
+  | p=jword T  UH { $katakana = $p.katakana + "ッツ"; }
+  | p=jword T  UW { $katakana = $p.katakana + "ッツ"; }
+  | p=jword T  EH { $katakana = $p.katakana + "ッテ"; }
+  | p=jword T  ER { $katakana = $p.katakana + "ッター"; }
+  | p=jword T  EY { $katakana = $p.katakana + "ッテイ"; }
+  | p=jword T  OW { $katakana = $p.katakana + "ットウ"; }
+  | p=jword T  OY { $katakana = $p.katakana + "ットイ"; }
+  | p=jword T     { $katakana = $p.katakana + "ット"; }
+  | p=jword TH AA { $katakana = $p.katakana + "ッサ"; }
+  | p=jword TH AE { $katakana = $p.katakana + "ッセ"; }
+  | p=jword TH AH { $katakana = $p.katakana + "ッサー"; }
+  | p=jword TH AO { $katakana = $p.katakana + "ッサオ"; }
+  | p=jword TH AW { $katakana = $p.katakana + "ッサウ"; }
+  | p=jword TH AY { $katakana = $p.katakana + "ッサイ"; }
+  | p=jword TH IH { $katakana = $p.katakana + "ッシー"; }
+  | p=jword TH IY { $katakana = $p.katakana + "ッシ"; }
+  | p=jword TH UH { $katakana = $p.katakana + "ッス"; }
+  | p=jword TH UW { $katakana = $p.katakana + "ッス"; }
+  | p=jword TH EH { $katakana = $p.katakana + "ッセ"; }
+  | p=jword TH ER { $katakana = $p.katakana + "ッサー"; }
+  | p=jword TH EY { $katakana = $p.katakana + "ッセイ"; }
+  | p=jword TH OW { $katakana = $p.katakana + "ッソウ"; }
+  | p=jword TH OY { $katakana = $p.katakana + "ッソイ"; }
+  | p=jword TH    { $katakana = $p.katakana + "ッス"; }
+  | B  AA { $katakana = "バ"; }
   | B  AE { $katakana = "ベ"; }
   | B  AH { $katakana = "バー"; }
   | B  AO { $katakana = "バオ"; }

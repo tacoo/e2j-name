@@ -1,6 +1,7 @@
 package tac.language;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,7 @@ public class App {
                 .map(w -> {
                     List<String> word = app.getWord(w);
                     String[] array = word.toArray(new String[word.size()]);
+                    System.out.println(Arrays.toString(array));
                     CMU2KatakanaLexer lexer = new CMU2KatakanaLexer(
                             new ANTLRInputStream(Stream.of(array).collect(Collectors.joining(" "))));
                     CommonTokenStream token = new CommonTokenStream(lexer);

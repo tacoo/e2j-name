@@ -1,5 +1,6 @@
 package tac.language;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,20 +27,36 @@ public class MapKatakanaAntlr {
 
     public static void main(String[] args) {
         prepareMap();
-        List<String> altrString = Stream.of(prefix)
-                .map(p -> {
-                    List<String> collect = Stream.of(base)
-                            .map(b -> String.format("  | %-2s %-2s { $katakana = \"%s\"; }", p, b, map(p, b)))
-                            .collect(Collectors.toList());
-                    collect.add(String.format("  | %-5s { $katakana = \"%s\"; }", p, map(p, null)));
-                    return collect;
+        List<String> altrString = new ArrayList<>();
+        altrString.addAll(Stream.of(prefix)
+                .filter(p -> "P".equals(p)
+                        || "T".equals(p)
+                        || "TH".equals(p))
+                .flatMap(p -> Stream.concat(
+                        Stream.of(base).map(b -> new String[] { p, b })
+                        , Stream.of(new String[][] { new String[] { p, null } })))
+                .map(ss -> {
+                    if (ss[1] == null) {
+                        return String.format("  | p=jword %-5s { $katakana = $p.katakana + \"ッ%s\"; }", ss[0], map(ss[0], ss[1]));
+                    }
+                    return String.format("  | p=jword %-2s %-2s { $katakana = $p.katakana + \"ッ%s\"; }", ss[0], ss[1], map(ss[0], ss[1]));
                 })
-                .flatMap(list -> list.stream())
-                .collect(Collectors.toList());
-        List<String> altrString2 = Stream.of(base)
+                .collect(Collectors.toList()));
+
+        altrString.addAll(Stream.of(prefix)
+                .flatMap(p -> Stream.concat(
+                        Stream.of(base).map(b -> new String[] { p, b })
+                        , Stream.of(new String[][] { new String[] { p, null } })))
+                .map(ss -> {
+                    if (ss[1] == null) {
+                        return String.format("  | %-5s { $katakana = \"%s\"; }", ss[0], map(ss[0], ss[1]));
+                    }
+                    return String.format("  | %-2s %-2s { $katakana = \"%s\"; }", ss[0], ss[1], map(ss[0], ss[1]));
+                })
+                .collect(Collectors.toList()));
+        altrString.addAll(Stream.of(base)
                 .map(b -> String.format("  | %-5s { $katakana = \"%s\"; }", b, (map(b, null))))
-                .collect(Collectors.toList());
-        altrString.addAll(altrString2);
+                .collect(Collectors.toList()));
         altrString.forEach(s -> System.out.println(s));
     }
 
