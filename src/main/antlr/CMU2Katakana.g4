@@ -15,7 +15,7 @@ jwords returns[String katakana] : j+=jword+
 
 jword returns[String katakana] : 
     p=jword P  AA { $katakana = $p.katakana + "ッパ"; }
-  | p=jword P  AE { $katakana = $p.katakana + "ッペ"; }
+  | p=jword P  AE { $katakana = $p.katakana + "ッパ"; }
   | p=jword P  AH { $katakana = $p.katakana + "ッパー"; }
   | p=jword P  AO { $katakana = $p.katakana + "ッパオ"; }
   | p=jword P  AW { $katakana = $p.katakana + "ッパウ"; }
@@ -31,7 +31,7 @@ jword returns[String katakana] :
   | p=jword P  OY { $katakana = $p.katakana + "ッポイ"; }
   | p=jword P     { $katakana = $p.katakana + "ップ"; }
   | p=jword T  AA { $katakana = $p.katakana + "ッタ"; }
-  | p=jword T  AE { $katakana = $p.katakana + "ッテ"; }
+  | p=jword T  AE { $katakana = $p.katakana + "ッタ"; }
   | p=jword T  AH { $katakana = $p.katakana + "ッター"; }
   | p=jword T  AO { $katakana = $p.katakana + "ッタオ"; }
   | p=jword T  AW { $katakana = $p.katakana + "ッタウ"; }
@@ -47,7 +47,7 @@ jword returns[String katakana] :
   | p=jword T  OY { $katakana = $p.katakana + "ットイ"; }
   | p=jword T     { $katakana = $p.katakana + "ット"; }
   | p=jword TH AA { $katakana = $p.katakana + "ッサ"; }
-  | p=jword TH AE { $katakana = $p.katakana + "ッセ"; }
+  | p=jword TH AE { $katakana = $p.katakana + "ッサ"; }
   | p=jword TH AH { $katakana = $p.katakana + "ッサー"; }
   | p=jword TH AO { $katakana = $p.katakana + "ッサオ"; }
   | p=jword TH AW { $katakana = $p.katakana + "ッサウ"; }
@@ -63,7 +63,7 @@ jword returns[String katakana] :
   | p=jword TH OY { $katakana = $p.katakana + "ッソイ"; }
   | p=jword TH    { $katakana = $p.katakana + "ッス"; }
   | B  AA { $katakana = "バ"; }
-  | B  AE { $katakana = "ベ"; }
+  | B  AE { $katakana = "バ"; }
   | B  AH { $katakana = "バー"; }
   | B  AO { $katakana = "バオ"; }
   | B  AW { $katakana = "バウ"; }
@@ -79,7 +79,7 @@ jword returns[String katakana] :
   | B  OY { $katakana = "ボイ"; }
   | B     { $katakana = "ブ"; }
   | CH AA { $katakana = "チャ"; }
-  | CH AE { $katakana = "チェ"; }
+  | CH AE { $katakana = "チャ"; }
   | CH AH { $katakana = "チャー"; }
   | CH AO { $katakana = "チャオ"; }
   | CH AW { $katakana = "チャウ"; }
@@ -95,7 +95,7 @@ jword returns[String katakana] :
   | CH OY { $katakana = "チョイ"; }
   | CH    { $katakana = "チ"; }
   | D  AA { $katakana = "ジャ"; }
-  | D  AE { $katakana = "デェ"; }
+  | D  AE { $katakana = "ジャ"; }
   | D  AH { $katakana = "ジャー"; }
   | D  AO { $katakana = "ジャオ"; }
   | D  AW { $katakana = "ジャウ"; }
@@ -107,11 +107,11 @@ jword returns[String katakana] :
   | D  EH { $katakana = "デェ"; }
   | D  ER { $katakana = "ジャー"; }
   | D  EY { $katakana = "デェイ"; }
-  | D  OW { $katakana = "ジョウ"; }
-  | D  OY { $katakana = "ジョイ"; }
-  | D     { $katakana = "ジョ"; }
+  | D  OW { $katakana = "ドウ"; }
+  | D  OY { $katakana = "ドイ"; }
+  | D     { $katakana = "ド"; }
   | DH AA { $katakana = "ジャ"; }
-  | DH AE { $katakana = "デェ"; }
+  | DH AE { $katakana = "ジャ"; }
   | DH AH { $katakana = "ジャー"; }
   | DH AO { $katakana = "ジャオ"; }
   | DH AW { $katakana = "ジャウ"; }
@@ -123,11 +123,11 @@ jword returns[String katakana] :
   | DH EH { $katakana = "デェ"; }
   | DH ER { $katakana = "ジャー"; }
   | DH EY { $katakana = "デェイ"; }
-  | DH OW { $katakana = "ジョウ"; }
-  | DH OY { $katakana = "ジョイ"; }
-  | DH    { $katakana = "ジョ"; }
+  | DH OW { $katakana = "ドウ"; }
+  | DH OY { $katakana = "ドイ"; }
+  | DH    { $katakana = "ド"; }
   | F  AA { $katakana = "ファ"; }
-  | F  AE { $katakana = "フェ"; }
+  | F  AE { $katakana = "ファ"; }
   | F  AH { $katakana = "ファー"; }
   | F  AO { $katakana = "ファオ"; }
   | F  AW { $katakana = "ファウ"; }
@@ -143,7 +143,7 @@ jword returns[String katakana] :
   | F  OY { $katakana = "フォイ"; }
   | F     { $katakana = "フ"; }
   | G  AA { $katakana = "ガ"; }
-  | G  AE { $katakana = "ゲ"; }
+  | G  AE { $katakana = "ガ"; }
   | G  AH { $katakana = "ガー"; }
   | G  AO { $katakana = "ガオ"; }
   | G  AW { $katakana = "ガウ"; }
@@ -159,7 +159,7 @@ jword returns[String katakana] :
   | G  OY { $katakana = "ゴイ"; }
   | G     { $katakana = "グ"; }
   | HH AA { $katakana = "ハ"; }
-  | HH AE { $katakana = "ヘ"; }
+  | HH AE { $katakana = "ハ"; }
   | HH AH { $katakana = "ハー"; }
   | HH AO { $katakana = "ハオ"; }
   | HH AW { $katakana = "ハウ"; }
@@ -175,7 +175,7 @@ jword returns[String katakana] :
   | HH OY { $katakana = "ホイ"; }
   | HH    { $katakana = "フ"; }
   | JH AA { $katakana = "ジャ"; }
-  | JH AE { $katakana = "ジェ"; }
+  | JH AE { $katakana = "ジャ"; }
   | JH AH { $katakana = "ジャー"; }
   | JH AO { $katakana = "ジャオ"; }
   | JH AW { $katakana = "ジャウ"; }
@@ -191,7 +191,7 @@ jword returns[String katakana] :
   | JH OY { $katakana = "ジョイ"; }
   | JH    { $katakana = "ヂ"; }
   | K  AA { $katakana = "カ"; }
-  | K  AE { $katakana = "ケ"; }
+  | K  AE { $katakana = "カ"; }
   | K  AH { $katakana = "カー"; }
   | K  AO { $katakana = "カオ"; }
   | K  AW { $katakana = "カウ"; }
@@ -207,7 +207,7 @@ jword returns[String katakana] :
   | K  OY { $katakana = "コイ"; }
   | K     { $katakana = "ク"; }
   | L  AA { $katakana = "ラ"; }
-  | L  AE { $katakana = "レ"; }
+  | L  AE { $katakana = "ラ"; }
   | L  AH { $katakana = "ラー"; }
   | L  AO { $katakana = "ラオ"; }
   | L  AW { $katakana = "ラウ"; }
@@ -223,7 +223,7 @@ jword returns[String katakana] :
   | L  OY { $katakana = "ロイ"; }
   | L     { $katakana = "ル"; }
   | M  AA { $katakana = "マ"; }
-  | M  AE { $katakana = "メ"; }
+  | M  AE { $katakana = "マ"; }
   | M  AH { $katakana = "マー"; }
   | M  AO { $katakana = "マオ"; }
   | M  AW { $katakana = "マウ"; }
@@ -239,7 +239,7 @@ jword returns[String katakana] :
   | M  OY { $katakana = "モイ"; }
   | M     { $katakana = "ム"; }
   | N  AA { $katakana = "ナ"; }
-  | N  AE { $katakana = "ネ"; }
+  | N  AE { $katakana = "ナ"; }
   | N  AH { $katakana = "ナー"; }
   | N  AO { $katakana = "ナオ"; }
   | N  AW { $katakana = "ナウ"; }
@@ -255,7 +255,7 @@ jword returns[String katakana] :
   | N  OY { $katakana = "ノイ"; }
   | N     { $katakana = "ン"; }
   | NG AA { $katakana = "ナ"; }
-  | NG AE { $katakana = "ネ"; }
+  | NG AE { $katakana = "ナ"; }
   | NG AH { $katakana = "ナー"; }
   | NG AO { $katakana = "ナオ"; }
   | NG AW { $katakana = "ナウ"; }
@@ -271,7 +271,7 @@ jword returns[String katakana] :
   | NG OY { $katakana = "ノイ"; }
   | NG    { $katakana = "ン"; }
   | P  AA { $katakana = "パ"; }
-  | P  AE { $katakana = "ペ"; }
+  | P  AE { $katakana = "パ"; }
   | P  AH { $katakana = "パー"; }
   | P  AO { $katakana = "パオ"; }
   | P  AW { $katakana = "パウ"; }
@@ -287,7 +287,7 @@ jword returns[String katakana] :
   | P  OY { $katakana = "ポイ"; }
   | P     { $katakana = "プ"; }
   | R  AA { $katakana = "ラ"; }
-  | R  AE { $katakana = "レ"; }
+  | R  AE { $katakana = "ラ"; }
   | R  AH { $katakana = "ラー"; }
   | R  AO { $katakana = "ラオ"; }
   | R  AW { $katakana = "ラウ"; }
@@ -303,7 +303,7 @@ jword returns[String katakana] :
   | R  OY { $katakana = "ロイ"; }
   | R     { $katakana = "ル"; }
   | S  AA { $katakana = "サ"; }
-  | S  AE { $katakana = "セ"; }
+  | S  AE { $katakana = "サ"; }
   | S  AH { $katakana = "サー"; }
   | S  AO { $katakana = "サオ"; }
   | S  AW { $katakana = "サウ"; }
@@ -319,7 +319,7 @@ jword returns[String katakana] :
   | S  OY { $katakana = "ソイ"; }
   | S     { $katakana = "ス"; }
   | SH AA { $katakana = "シャ"; }
-  | SH AE { $katakana = "シェ"; }
+  | SH AE { $katakana = "シャ"; }
   | SH AH { $katakana = "シャー"; }
   | SH AO { $katakana = "シャオ"; }
   | SH AW { $katakana = "シャウ"; }
@@ -335,7 +335,7 @@ jword returns[String katakana] :
   | SH OY { $katakana = "ショイ"; }
   | SH    { $katakana = "シュ"; }
   | T  AA { $katakana = "タ"; }
-  | T  AE { $katakana = "テ"; }
+  | T  AE { $katakana = "タ"; }
   | T  AH { $katakana = "ター"; }
   | T  AO { $katakana = "タオ"; }
   | T  AW { $katakana = "タウ"; }
@@ -351,7 +351,7 @@ jword returns[String katakana] :
   | T  OY { $katakana = "トイ"; }
   | T     { $katakana = "ト"; }
   | TH AA { $katakana = "サ"; }
-  | TH AE { $katakana = "セ"; }
+  | TH AE { $katakana = "サ"; }
   | TH AH { $katakana = "サー"; }
   | TH AO { $katakana = "サオ"; }
   | TH AW { $katakana = "サウ"; }
@@ -367,7 +367,7 @@ jword returns[String katakana] :
   | TH OY { $katakana = "ソイ"; }
   | TH    { $katakana = "ス"; }
   | V  AA { $katakana = "バ"; }
-  | V  AE { $katakana = "ベ"; }
+  | V  AE { $katakana = "バ"; }
   | V  AH { $katakana = "バー"; }
   | V  AO { $katakana = "バオ"; }
   | V  AW { $katakana = "バウ"; }
@@ -383,7 +383,7 @@ jword returns[String katakana] :
   | V  OY { $katakana = "ボイ"; }
   | V     { $katakana = "ブ"; }
   | W  AA { $katakana = "ワ"; }
-  | W  AE { $katakana = "ウェ"; }
+  | W  AE { $katakana = "ワ"; }
   | W  AH { $katakana = "ワー"; }
   | W  AO { $katakana = "ワオ"; }
   | W  AW { $katakana = "ワウ"; }
@@ -399,7 +399,7 @@ jword returns[String katakana] :
   | W  OY { $katakana = "ウォイ"; }
   | W     { $katakana = "ウ"; }
   | Y  AA { $katakana = "ヤ"; }
-  | Y  AE { $katakana = "イエ"; }
+  | Y  AE { $katakana = "ヤ"; }
   | Y  AH { $katakana = "ヤー"; }
   | Y  AO { $katakana = "ヤオ"; }
   | Y  AW { $katakana = "ヤウ"; }
@@ -415,7 +415,7 @@ jword returns[String katakana] :
   | Y  OY { $katakana = "ヨイ"; }
   | Y     { $katakana = "イ"; }
   | Z  AA { $katakana = "ザ"; }
-  | Z  AE { $katakana = "ゼ"; }
+  | Z  AE { $katakana = "ザ"; }
   | Z  AH { $katakana = "ザー"; }
   | Z  AO { $katakana = "ザオ"; }
   | Z  AW { $katakana = "ザウ"; }
@@ -431,7 +431,7 @@ jword returns[String katakana] :
   | Z  OY { $katakana = "ゾイ"; }
   | Z     { $katakana = "ズ"; }
   | ZH AA { $katakana = "ジャ"; }
-  | ZH AE { $katakana = "ジェ"; }
+  | ZH AE { $katakana = "ジャ"; }
   | ZH AH { $katakana = "ジャー"; }
   | ZH AO { $katakana = "ジャオ"; }
   | ZH AW { $katakana = "ジャウ"; }
@@ -447,7 +447,7 @@ jword returns[String katakana] :
   | ZH OY { $katakana = "ジョイ"; }
   | ZH    { $katakana = "ジュ"; }
   | AA    { $katakana = "ア"; }
-  | AE    { $katakana = "エ"; }
+  | AE    { $katakana = "ア"; }
   | AH    { $katakana = "アー"; }
   | AO    { $katakana = "アオ"; }
   | AW    { $katakana = "アウ"; }

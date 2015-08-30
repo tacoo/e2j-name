@@ -224,7 +224,7 @@ public class MapKatakanaAntlr {
 
     private static void prepareMap() {
         baseKanaMap.put("AA", new String[] { "A" });
-        baseKanaMap.put("AE", new String[] { "E" });
+        baseKanaMap.put("AE", new String[] { "A" });
         baseKanaMap.put("AH", new String[] { "A", "-" });
         baseKanaMap.put("AO", new String[] { "A", "O" });
         baseKanaMap.put("AW", new String[] { "A", "U" });
@@ -385,7 +385,6 @@ public class MapKatakanaAntlr {
         kanaMap.put("DI", "ディ");
         kanaMap.put("DU", "ジュ");
         kanaMap.put("DE", "デェ");
-        kanaMap.put("DO", "ジョ");
 
         kanaMap.put("ZYA", "ジャ");
         kanaMap.put("ZYI", "ゼィ");

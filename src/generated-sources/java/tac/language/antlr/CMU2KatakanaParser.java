@@ -303,7 +303,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(B);
 				setState(21);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "ベ"; 
+				 ((JwordContext)_localctx).katakana =  "バ"; 
 				}
 				break;
 			case 3:
@@ -445,7 +445,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(CH);
 				setState(68);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "チェ"; 
+				 ((JwordContext)_localctx).katakana =  "チャ"; 
 				}
 				break;
 			case 19:
@@ -587,7 +587,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(D);
 				setState(115);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "デェ"; 
+				 ((JwordContext)_localctx).katakana =  "ジャ"; 
 				}
 				break;
 			case 35:
@@ -695,7 +695,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(D);
 				setState(151);
 				match(OW);
-				 ((JwordContext)_localctx).katakana =  "ジョウ"; 
+				 ((JwordContext)_localctx).katakana =  "ドウ"; 
 				}
 				break;
 			case 47:
@@ -704,14 +704,14 @@ public class CMU2KatakanaParser extends Parser {
 				match(D);
 				setState(154);
 				match(OY);
-				 ((JwordContext)_localctx).katakana =  "ジョイ"; 
+				 ((JwordContext)_localctx).katakana =  "ドイ"; 
 				}
 				break;
 			case 48:
 				{
 				setState(156);
 				match(D);
-				 ((JwordContext)_localctx).katakana =  "ジョ"; 
+				 ((JwordContext)_localctx).katakana =  "ド"; 
 				}
 				break;
 			case 49:
@@ -729,7 +729,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(DH);
 				setState(162);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "デェ"; 
+				 ((JwordContext)_localctx).katakana =  "ジャ"; 
 				}
 				break;
 			case 51:
@@ -837,7 +837,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(DH);
 				setState(198);
 				match(OW);
-				 ((JwordContext)_localctx).katakana =  "ジョウ"; 
+				 ((JwordContext)_localctx).katakana =  "ドウ"; 
 				}
 				break;
 			case 63:
@@ -846,14 +846,14 @@ public class CMU2KatakanaParser extends Parser {
 				match(DH);
 				setState(201);
 				match(OY);
-				 ((JwordContext)_localctx).katakana =  "ジョイ"; 
+				 ((JwordContext)_localctx).katakana =  "ドイ"; 
 				}
 				break;
 			case 64:
 				{
 				setState(203);
 				match(DH);
-				 ((JwordContext)_localctx).katakana =  "ジョ"; 
+				 ((JwordContext)_localctx).katakana =  "ド"; 
 				}
 				break;
 			case 65:
@@ -871,7 +871,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(F);
 				setState(209);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "フェ"; 
+				 ((JwordContext)_localctx).katakana =  "ファ"; 
 				}
 				break;
 			case 67:
@@ -1013,7 +1013,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(G);
 				setState(256);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "ゲ"; 
+				 ((JwordContext)_localctx).katakana =  "ガ"; 
 				}
 				break;
 			case 83:
@@ -1155,7 +1155,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(HH);
 				setState(303);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "ヘ"; 
+				 ((JwordContext)_localctx).katakana =  "ハ"; 
 				}
 				break;
 			case 99:
@@ -1297,7 +1297,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(JH);
 				setState(350);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "ジェ"; 
+				 ((JwordContext)_localctx).katakana =  "ジャ"; 
 				}
 				break;
 			case 115:
@@ -1439,7 +1439,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(K);
 				setState(397);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "ケ"; 
+				 ((JwordContext)_localctx).katakana =  "カ"; 
 				}
 				break;
 			case 131:
@@ -1581,7 +1581,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(L);
 				setState(444);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "レ"; 
+				 ((JwordContext)_localctx).katakana =  "ラ"; 
 				}
 				break;
 			case 147:
@@ -1723,7 +1723,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(M);
 				setState(491);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "メ"; 
+				 ((JwordContext)_localctx).katakana =  "マ"; 
 				}
 				break;
 			case 163:
@@ -1865,7 +1865,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(N);
 				setState(538);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "ネ"; 
+				 ((JwordContext)_localctx).katakana =  "ナ"; 
 				}
 				break;
 			case 179:
@@ -2007,7 +2007,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(NG);
 				setState(585);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "ネ"; 
+				 ((JwordContext)_localctx).katakana =  "ナ"; 
 				}
 				break;
 			case 195:
@@ -2149,7 +2149,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(P);
 				setState(632);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "ペ"; 
+				 ((JwordContext)_localctx).katakana =  "パ"; 
 				}
 				break;
 			case 211:
@@ -2291,7 +2291,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(R);
 				setState(679);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "レ"; 
+				 ((JwordContext)_localctx).katakana =  "ラ"; 
 				}
 				break;
 			case 227:
@@ -2433,7 +2433,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(S);
 				setState(726);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "セ"; 
+				 ((JwordContext)_localctx).katakana =  "サ"; 
 				}
 				break;
 			case 243:
@@ -2575,7 +2575,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(SH);
 				setState(773);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "シェ"; 
+				 ((JwordContext)_localctx).katakana =  "シャ"; 
 				}
 				break;
 			case 259:
@@ -2717,7 +2717,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(T);
 				setState(820);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "テ"; 
+				 ((JwordContext)_localctx).katakana =  "タ"; 
 				}
 				break;
 			case 275:
@@ -2859,7 +2859,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(TH);
 				setState(867);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "セ"; 
+				 ((JwordContext)_localctx).katakana =  "サ"; 
 				}
 				break;
 			case 291:
@@ -3001,7 +3001,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(V);
 				setState(914);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "ベ"; 
+				 ((JwordContext)_localctx).katakana =  "バ"; 
 				}
 				break;
 			case 307:
@@ -3143,7 +3143,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(W);
 				setState(961);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "ウェ"; 
+				 ((JwordContext)_localctx).katakana =  "ワ"; 
 				}
 				break;
 			case 323:
@@ -3285,7 +3285,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(Y);
 				setState(1008);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "イエ"; 
+				 ((JwordContext)_localctx).katakana =  "ヤ"; 
 				}
 				break;
 			case 339:
@@ -3427,7 +3427,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(Z);
 				setState(1055);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "ゼ"; 
+				 ((JwordContext)_localctx).katakana =  "ザ"; 
 				}
 				break;
 			case 355:
@@ -3569,7 +3569,7 @@ public class CMU2KatakanaParser extends Parser {
 				match(ZH);
 				setState(1102);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "ジェ"; 
+				 ((JwordContext)_localctx).katakana =  "ジャ"; 
 				}
 				break;
 			case 371:
@@ -3707,7 +3707,7 @@ public class CMU2KatakanaParser extends Parser {
 				{
 				setState(1147);
 				match(AE);
-				 ((JwordContext)_localctx).katakana =  "エ"; 
+				 ((JwordContext)_localctx).katakana =  "ア"; 
 				}
 				break;
 			case 387:
@@ -3840,7 +3840,7 @@ public class CMU2KatakanaParser extends Parser {
 						match(P);
 						setState(1183);
 						match(AE);
-						 ((JwordContext)_localctx).katakana =  ((JwordContext)_localctx).p.katakana + "ッペ"; 
+						 ((JwordContext)_localctx).katakana =  ((JwordContext)_localctx).p.katakana + "ッパ"; 
 						}
 						break;
 					case 3:
@@ -4078,7 +4078,7 @@ public class CMU2KatakanaParser extends Parser {
 						match(T);
 						setState(1246);
 						match(AE);
-						 ((JwordContext)_localctx).katakana =  ((JwordContext)_localctx).p.katakana + "ッテ"; 
+						 ((JwordContext)_localctx).katakana =  ((JwordContext)_localctx).p.katakana + "ッタ"; 
 						}
 						break;
 					case 19:
@@ -4316,7 +4316,7 @@ public class CMU2KatakanaParser extends Parser {
 						match(TH);
 						setState(1309);
 						match(AE);
-						 ((JwordContext)_localctx).katakana =  ((JwordContext)_localctx).p.katakana + "ッセ"; 
+						 ((JwordContext)_localctx).katakana =  ((JwordContext)_localctx).p.katakana + "ッサ"; 
 						}
 						break;
 					case 35:
