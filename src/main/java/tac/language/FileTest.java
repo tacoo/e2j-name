@@ -6,6 +6,8 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.LogManager;
@@ -34,6 +36,7 @@ class FileTest {
         URL resource = FileTest.class.getResource("/english_names.txt");
         Path path = Paths.get(resource.toURI());
 
+        List<String> lines = new ArrayList<>();
         Files.lines(path, utf8)
                 .filter(s -> !"".equals(s.trim()))
                 .forEach(s -> {
@@ -46,13 +49,14 @@ class FileTest {
                     CMU2KatakanaParser parser = new CMU2KatakanaParser(token);
                     ConvertKatakanaContext context = parser.convertKatakana();
 
-                    System.out.println(
-                            String.format("%s\t%s\t%s"
-                                    , s
-                                    , Arrays.toString(array)
-                                    , context.result)
-                            );
+                    String result = String.format("%s\t%s\t%s"
+                            , s
+                            , Arrays.toString(array)
+                            , context.result);
+                    System.out.println(result);
+                    lines.add(result);
                 });
+        Files.write(Paths.get("./test.log"), lines, StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
         app.close();
 
     }
