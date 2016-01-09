@@ -22,7 +22,7 @@ ext {
   antlrVersion = "4.5.1-1"
   antlr = [
     antlrSource: 'src/main/antlr',
-    destinationDir: "src/generated-sources/java",
+    destinationDir: "build/generated-sources/antlr",
     grammarpackage: "tac.language.antlr",
   ]
   mainClassName = "tac.language.App"
@@ -38,7 +38,7 @@ sourceSets {
   main {
     java {
       srcDir 'src/main/java'
-      srcDir 'src/generated-sources/java'
+      srcDir antlr.destinationDir
     }
   }
 }
