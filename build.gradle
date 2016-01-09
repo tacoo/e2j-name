@@ -1,20 +1,9 @@
 
-plugins {
-  id "us.kirchmeier.capsule" version "1.0-rc1"
-}
-
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
 sourceCompatibility = 1.8
 version = '1.0'
-
-jar {
-    manifest {
-        attributes 'Implementation-Title': 'Gradle Quickstart',
-                   'Implementation-Version': version
-    }
-}
 
 repositories {
     mavenCentral()
@@ -29,11 +18,20 @@ configurations {
   }
 }
 
+ext {
+  antlrVersion = "4.5.1-1"
+  antlr = [
+    antlrSource: 'src/main/antlr',
+    destinationDir: "src/generated-sources/java",
+    grammarpackage: "tac.language.antlr",
+  ]
+  mainClassName = "tac.language.App"
+}
+
 dependencies {
-    compile 'edu.cmu.sphinx:sphinx4-core:1.0-SNAPSHOT'
-    compile 'org.antlr:antlr4-runtime:4.5.1-1'
-    antlr4 'org.antlr:antlr4:4.5.1-1'
-    testCompile group: 'junit', name: 'junit', version: '4.+'
+    compile 'edu.cmu.sphinx:sphinx4-core:5prealpha-SNAPSHOT'
+    compile "org.antlr:antlr4-runtime:$antlrVersion"
+    antlr4 "org.antlr:antlr4:$antlrVersion"
 }
 
 sourceSets {
@@ -44,12 +42,6 @@ sourceSets {
     }
   }
 }
-
-ext.antlr = [
-  antlrSource: 'src/main/antlr'
-  , destinationDir: "src/generated-sources/java"
-  , grammarpackage: "tac.language.antlr",
-]
 
 task antlrOutputDir << {
   mkdir(antlr.destinationDir)
@@ -79,6 +71,12 @@ clean {
   delete antlr.destinationDir
 }
 
-task fatCapsule(type: FatCapsule) {
-  applicationClass 'tac.language.App'
+jar {
+  manifest { 
+    attributes "Main-Class": "$mainClassName"
+  }  
+
+  from {
+    configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+  }
 }
