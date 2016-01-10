@@ -31,6 +31,8 @@ ext {
 dependencies {
     compile 'edu.cmu.sphinx:sphinx4-core:5prealpha-SNAPSHOT'
     compile "org.antlr:antlr4-runtime:$antlrVersion"
+    compile 'com.ibm.icu:icu4j:56.1'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.6.4'
     antlr4 "org.antlr:antlr4:$antlrVersion"
 }
 
@@ -38,6 +40,7 @@ sourceSets {
   main {
     java {
       srcDir 'src/main/java'
+      srcDir antlr.antlrSource
       srcDir antlr.destinationDir
     }
   }
