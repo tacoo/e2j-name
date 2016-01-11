@@ -1,4 +1,4 @@
-package tac.language.kanji;
+package tac.language.util;
 
 import java.io.File;
 import java.net.URL;

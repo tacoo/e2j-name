@@ -1,12 +1,21 @@
-package tac.language;
+package tac.language.util;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateExceptionHandler;
 
 public class MapKatakanaAntlr {
     static String[] base = new String[] {
@@ -25,42 +34,58 @@ public class MapKatakanaAntlr {
             "W", "Y", "Z", "ZH",
     };
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         prepareMap();
         List<String> altrString = new ArrayList<>();
+        // S HH AE -> シャ
         altrString.addAll(Stream.of(prefix)
-                .filter(p -> "P".equals(p)
-                        || "T".equals(p)
-                        || "TH".equals(p))
+                .filter(p -> !"NG".equals(p))
+                .flatMap(p -> Stream.of(base).map(b -> new String[] { p, "HH", b }))
+                .map(s -> {
+                    String[] ss = (String[]) s;
+                    return String.format("  | %-2s %-2s %-2s { $katakana = \"%s\"; }", ss[0], ss[1], ss[2], map(ss[0], ss[1], ss[2]));
+                }).collect(Collectors.toList()));
+
+        // B AA -> バ
+        altrString.addAll(Stream.of(prefix)
                 .flatMap(p -> Stream.concat(
                         Stream.of(base).map(b -> new String[] { p, b })
                         , Stream.of(new String[][] { new String[] { p, null } })))
                 .map(ss -> {
                     if (ss[1] == null) {
-                        return String.format("  | p=jword %-5s { $katakana = $p.katakana + \"ッ%s\"; }", ss[0], map(ss[0], ss[1]));
+                        return String.format("  | %-5s { $katakana = \"%s\"; }", ss[0], map(ss[0], null, ss[1]));
                     }
-                    return String.format("  | p=jword %-2s %-2s { $katakana = $p.katakana + \"ッ%s\"; }", ss[0], ss[1], map(ss[0], ss[1]));
+                    return String.format("  | %-2s %-2s { $katakana = \"%s\"; }", ss[0], ss[1], map(ss[0], null, ss[1]));
                 })
+                .collect(Collectors.toList()));
+        // A -> ア
+        altrString.addAll(Stream.of(base)
+                .map(b -> String.format("  | %-5s { $katakana = \"%s\"; }", b, (map(b, null, null))))
                 .collect(Collectors.toList()));
 
-        altrString.addAll(Stream.of(prefix)
-                .flatMap(p -> Stream.concat(
-                        Stream.of(base).map(b -> new String[] { p, b })
-                        , Stream.of(new String[][] { new String[] { p, null } })))
-                .map(ss -> {
-                    if (ss[1] == null) {
-                        return String.format("  | %-5s { $katakana = \"%s\"; }", ss[0], map(ss[0], ss[1]));
-                    }
-                    return String.format("  | %-2s %-2s { $katakana = \"%s\"; }", ss[0], ss[1], map(ss[0], ss[1]));
-                })
-                .collect(Collectors.toList()));
-        altrString.addAll(Stream.of(base)
-                .map(b -> String.format("  | %-5s { $katakana = \"%s\"; }", b, (map(b, null))))
-                .collect(Collectors.toList()));
-        altrString.forEach(s -> System.out.println(s));
+        AtomicBoolean first = new AtomicBoolean(true);
+        String strPattern = altrString.stream().map(s -> {
+            if (first.getAndSet(false)) {
+                return s.replaceFirst("\\|", " ");
+            } else {
+                return s;
+            }
+        }).collect(Collectors.joining("\n"));
+
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
+        cfg.setDirectoryForTemplateLoading(new File("src/test/resources/"));
+        cfg.setDefaultEncoding("UTF-8");
+        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+
+        Map<String, Object> root = new HashMap<>();
+        root.put("katakana_pattern", strPattern);
+        Template temp = cfg.getTemplate("CMU2Katakana.g4.ftl");
+
+        Writer out = new OutputStreamWriter(new FileOutputStream("src/main/antlr/CMU2Katakana.g4"));
+        temp.process(root, out);
     }
 
-    private static String map(String p, String b) {
+    private static String map(String p, String hh, String b) {
         if (baseKanaMap.containsKey(p)) {
             return Stream.of(baseKanaMap.get(p)).map(s -> kanaMap.get(s)).collect(Collectors.joining(""));
         }
@@ -69,7 +94,7 @@ public class MapKatakanaAntlr {
             if (b == null) {
                 baseAry = new String[] { "U" };
             }
-            return concatKana(p, baseAry);
+            return concatKana("HH".equals(hh) ? p + "Y" : p, baseAry);
         }
         if ("CH".equals(p)) {
             if (b == null) {
@@ -93,13 +118,13 @@ public class MapKatakanaAntlr {
             if (b == null) {
                 baseAry = new String[] { "U" };
             }
-            return concatKana(p, baseAry);
+            return concatKana("HH".equals(hh) ? "HY" : p, baseAry);
         }
         if ("G".equals(p)) {
             if (b == null) {
                 baseAry = new String[] { "U" };
             }
-            return concatKana(p, baseAry);
+            return concatKana("HH".equals(hh) ? p + "Y" : p, baseAry);
         }
         if ("HH".equals(p)) {
             if (b == null) {
@@ -117,49 +142,53 @@ public class MapKatakanaAntlr {
             if (b == null) {
                 baseAry = new String[] { "U" };
             }
-            return concatKana(p, baseAry);
+            if ("HH".equals(hh)) {
+                return concatKana("CH", baseAry);
+            }
+            return concatKana("HH".equals(hh) ? p + "Y" : p, baseAry);
         }
         if ("L".equals(p)) {
             if (b == null) {
                 baseAry = new String[] { "U" };
             }
-            return concatKana("R", baseAry);
+            return concatKana("HH".equals(hh) ? "RY" : "R", baseAry);
         }
         if ("M".equals(p)) {
             if (b == null) {
                 baseAry = new String[] { "U" };
             }
-            return concatKana(p, baseAry);
+            return concatKana("HH".equals(hh) ? p + "Y" : p, baseAry);
         }
         if ("N".equals(p)) {
             if (b == null) {
                 return "ン";
             }
-            return concatKana(p, baseAry);
+            return concatKana("HH".equals(hh) ? p + "Y" : p, baseAry);
         }
         if ("NG".equals(p)) {
             if (b == null) {
                 return "ン";
             }
-            return concatKana("N", baseAry);
+            return concatKana("HH".equals(hh) ? p + "NY" : "N", baseAry);
         }
         if ("P".equals(p)) {
             if (b == null) {
                 baseAry = new String[] { "U" };
             }
-            return concatKana(p, baseAry);
+            return concatKana("HH".equals(hh) ? "F" : p, baseAry);
         }
         if ("R".equals(p)) {
             if (b == null) {
-                baseAry = new String[] { "U" };
+                //baseAry = new String[] { "U" };
+                return "";
             }
-            return concatKana(p, baseAry);
+            return concatKana("HH".equals(hh) ? p + "Y" : p, baseAry);
         }
         if ("S".equals(p)) {
             if (b == null) {
                 baseAry = new String[] { "U" };
             }
-            return concatKana(p, baseAry);
+            return concatKana("HH".equals(hh) ? p + "Y" : p, baseAry);
         }
         if ("SH".equals(p)) {
             if (b == null) {
@@ -171,7 +200,7 @@ public class MapKatakanaAntlr {
             if (b == null) {
                 baseAry = new String[] { "O" };
             }
-            return concatKana(p, baseAry);
+            return concatKana("HH".equals(hh) ? "S" : p, baseAry);
         }
         if ("TH".equals(p)) {
             if (b == null) {
@@ -183,13 +212,13 @@ public class MapKatakanaAntlr {
             if (b == null) {
                 baseAry = new String[] { "U" };
             }
-            return concatKana("B", baseAry);
+            return concatKana("HH".equals(hh) ? p + "BY" : "B", baseAry);
         }
         if ("W".equals(p)) {
             if (b == null) {
                 baseAry = new String[] { "U" };
             }
-            return concatKana(p, baseAry);
+            return concatKana("HH".equals(hh) ? p + "Y" : p, baseAry);
         }
         if ("Y".equals(p)) {
             if (b == null) {
@@ -201,7 +230,7 @@ public class MapKatakanaAntlr {
             if (b == null) {
                 baseAry = new String[] { "U" };
             }
-            return concatKana(p, baseAry);
+            return concatKana("HH".equals(hh) ? p + "Y" : p, baseAry);
         }
         if ("ZH".equals(p)) {
             if (b == null) {
@@ -225,18 +254,23 @@ public class MapKatakanaAntlr {
     private static void prepareMap() {
         baseKanaMap.put("AA", new String[] { "A" });
         baseKanaMap.put("AE", new String[] { "A" });
-        baseKanaMap.put("AH", new String[] { "A", "-" });
-        baseKanaMap.put("AO", new String[] { "A", "O" });
+        baseKanaMap.put("AH", new String[] { "A" });
+        // baseKanaMap.put("AH", new String[] { "A", "-" });
+        baseKanaMap.put("AO", new String[] { "O" });
+        // baseKanaMap.put("AO", new String[] { "A", "O" });
         baseKanaMap.put("AW", new String[] { "A", "U" });
         baseKanaMap.put("AY", new String[] { "A", "I" });
-        baseKanaMap.put("IH", new String[] { "I", "-" });
+        baseKanaMap.put("IH", new String[] { "I" });
+        // baseKanaMap.put("IH", new String[] { "I", "-" });
         baseKanaMap.put("IY", new String[] { "I" });
         baseKanaMap.put("UH", new String[] { "U" });
         baseKanaMap.put("UW", new String[] { "U" });
         baseKanaMap.put("EH", new String[] { "E" });
-        baseKanaMap.put("ER", new String[] { "A", "-" });
+        baseKanaMap.put("ER", new String[] { "A" });
+        // baseKanaMap.put("ER", new String[] { "A", "-" });
         baseKanaMap.put("EY", new String[] { "E", "I" });
-        baseKanaMap.put("OW", new String[] { "O", "U" });
+        baseKanaMap.put("OW", new String[] { "O" });
+        // baseKanaMap.put("OW", new String[] { "O", "U" });
         baseKanaMap.put("OY", new String[] { "O", "I" });
 
         kanaMap.put("-", "ー");
@@ -335,7 +369,9 @@ public class MapKatakanaAntlr {
         kanaMap.put("PO", "ポ");
 
         kanaMap.put("KYA", "キャ");
+        kanaMap.put("KYI", "キ");
         kanaMap.put("KYU", "キュ");
+        kanaMap.put("KYE", "ケ");
         kanaMap.put("KYO", "キョ");
 
         kanaMap.put("SHA", "シャ");
@@ -343,6 +379,7 @@ public class MapKatakanaAntlr {
         kanaMap.put("SHE", "シェ");
         kanaMap.put("SHO", "ショ");
         kanaMap.put("SYA", "シャ");
+        kanaMap.put("SYI", "シ");
         kanaMap.put("SYU", "シュ");
         kanaMap.put("SYE", "シェ");
         kanaMap.put("SYO", "ショ");
@@ -354,11 +391,15 @@ public class MapKatakanaAntlr {
         kanaMap.put("CHO", "チョ");
 
         kanaMap.put("NYA", "ニャ");
+        kanaMap.put("NYI", "ニ");
         kanaMap.put("NYU", "ニュ");
+        kanaMap.put("NYE", "ニェ");
         kanaMap.put("NYO", "ニョ");
 
         kanaMap.put("HYA", "ヒャ");
+        kanaMap.put("HYI", "ヒ");
         kanaMap.put("HYU", "ヒュ");
+        kanaMap.put("HYE", "ヒェ");
         kanaMap.put("HYO", "ヒョ");
 
         kanaMap.put("FA", "ファ");
@@ -367,7 +408,9 @@ public class MapKatakanaAntlr {
         kanaMap.put("FO", "フォ");
 
         kanaMap.put("MYA", "ミャ");
+        kanaMap.put("MYI", "ミ");
         kanaMap.put("MYU", "ミュ");
+        kanaMap.put("MYE", "ミェ");
         kanaMap.put("MYO", "ミョ");
 
         kanaMap.put("RYA", "リャ");
@@ -381,7 +424,6 @@ public class MapKatakanaAntlr {
         kanaMap.put("JA", "ジャ");
         kanaMap.put("JU", "ジュ");
         kanaMap.put("JO", "ジョ");
-        kanaMap.put("DA", "ジャ");
         kanaMap.put("DI", "ディ");
         kanaMap.put("DU", "ジュ");
         kanaMap.put("DE", "デェ");
@@ -391,11 +433,13 @@ public class MapKatakanaAntlr {
         kanaMap.put("ZYU", "ジュ");
         kanaMap.put("ZYE", "ジェ");
         kanaMap.put("ZYO", "ジョ");
+
         kanaMap.put("ZHA", "ジャ");
         kanaMap.put("ZHI", "ゼィ");
         kanaMap.put("ZHU", "ジュ");
         kanaMap.put("ZHE", "ジェ");
         kanaMap.put("ZHO", "ジョ");
+
         kanaMap.put("JA", "ジャ");
         kanaMap.put("JU", "ジュ");
         kanaMap.put("JE", "ジェ");

@@ -51,7 +51,7 @@ public class App {
         app.close();
     }
 
-    List<String> getWord(String text) {
+    public List<String> getWord(String text) {
         Word word = this.dictionary.getWord(text);
         if (word == null
                 || word.getPronunciations() == null
@@ -67,7 +67,7 @@ public class App {
     TextDictionary dictionary;
     Map<String, String> cmu2Ipa;
 
-    void loadDictionary() {
+    public void loadDictionary() {
         try {
             TextDictionary dictionary = new TextDictionary(
                     App.class.getResource("/cmudict-en-us.dict")
@@ -86,7 +86,7 @@ public class App {
         }
     }
 
-    void close() {
+    public void close() {
         this.dictionary.deallocate();
     }
 

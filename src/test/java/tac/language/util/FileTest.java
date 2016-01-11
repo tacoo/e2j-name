@@ -1,4 +1,4 @@
-package tac.language;
+package tac.language.util;
 
 import java.io.IOException;
 import java.net.URL;
@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
+import tac.language.App;
 import tac.language.antlr.CMU2KatakanaLexer;
 import tac.language.antlr.CMU2KatakanaParser;
 import tac.language.antlr.CMU2KatakanaParser.ConvertKatakanaContext;
@@ -56,7 +57,7 @@ class FileTest {
                     System.out.println(result);
                     lines.add(result);
                 });
-        Files.write(Paths.get("./test.log"), lines, StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
+        Files.write(Paths.get("./sample/test.log"), lines, StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
         app.close();
 
     }
